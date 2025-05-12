@@ -1,27 +1,64 @@
 # ShopFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
+The UI to the microservices that will help manage and connect the food delivery microservices.
 
-## Development server
+## Running the Application
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+You can run the ShopFrontend application using Docker Compose. Make sure you have Docker and Docker Compose installed on your machine.
 
-## Code scaffolding
+1. Navigate to the root directory of the ShopFrontend project.
+2. Run the following command to start the application:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+   ```bash
+   docker-compose up --build
+   ```
 
-## Build
+3. Once the application is running, you can access it at:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+   ```
+   http://localhost:3000
+   ```
 
-## Running unit tests
+## Configuration
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The application can be configured using environment variables. You can set these variables in a `.env` file or directly in your Docker Compose configuration.
 
-## Running end-to-end tests
+### Important Environment Variables
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `REACT_APP_API_URL`: The base URL for the backend API services.
 
-## Further help
+## Development
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To run the application in development mode, follow these steps:
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+3. Open your browser and navigate to `http://localhost:3000`.
+
+## Building for Production
+
+To build the application for production, run:
+
+```bash
+npm run build
+```
+
+This will create a `build` directory with the optimized production build of your application.
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests. Please ensure that your code adheres to the project's coding standards and includes appropriate tests.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
