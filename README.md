@@ -54,3 +54,104 @@ Das Projekt folgt einer **Microservices-Architektur** mit mehreren unabhängigen
   - `DeliveryRepository`: Datenbankzugriff
   - `RabbitMqConfiguration`: Event-Bus Konfiguration
 
+**Key Endpoints**:
+- `GET /deliveries`: Alle Lieferungen abrufen
+- `GET /deliveries/{id}`: Lieferung verfolgen
+- `PUT /deliveries/{id}`: Lieferstatus aktualisieren
+
+**Swagger UI**: http://localhost:8061/swagger-ui.html
+
+---
+
+#### 3. **Kitchen Microservice** (Go)
+- **Port**: 8062
+- **Beschreibung**: Verwaltet Bestellvorbereitung und Küchenlogistik
+- **Technologie**: Go, REST API
+- **Datei**: `main.go`
+
+**Key Endpoints**:
+- `GET /kitchen/orders`: Ausstehende Bestellungen
+- `PUT /kitchen/orders/{id}`: Bestellstatus aktualisieren
+
+---
+
+#### 4. **Shop Frontend** (Angular)
+- **Port**: 4200
+- **Beschreibung**: Web-Benutzeroberfläche für Kunden
+- **Technologie**: Angular 17+, SCSS, TypeScript
+- **Struktur**:
+  - `app/order`: Bestellverwaltung
+  - `app/delivery`: Lieferverfolgung
+  - `app/delivery/services`: API-Services
+
+---
+
+### Kommunikation zwischen Services
+
+#### RabbitMQ Message Bus
+- **Order Service** publiziert "OrderCreated" Events
+- **Delivery Service** empfängt Events und erstellt Lieferungen
+- **Asynchrone Kommunikation** für Skalierbarkeit
+
+#### REST API Calls
+- **Order Service** ruft externe Menü-Services auf
+- **Frontend** kommuniziert mit Order und Delivery Services
+
+---
+
+### Docker Deployment
+
+Jeder Service hat ein `Dockerfile` für Container-Deployment:
+
+```bash
+# Build und Start aller Services
+docker-compose up --build
+
+# Einzelne Services starten
+docker build -t order-service ./order
+docker run -p 8060:8060 order-service
+
+docker build -t delivery-service ./delivery
+docker run -p 8061:8061 delivery-service
+
+docker build -t kitchen-service ./kitchen
+docker run -p 8062:8062 kitchen-service
+```
+
+---
+
+### Entwicklungsumgebung
+
+#### Voraussetzungen
+- **Java 17+** (für Order & Delivery Services)
+- **Go 1.21+** (für Kitchen Service)
+- **Node.js 18+** (für Angular Frontend)
+- **Docker & Docker Compose**
+- **RabbitMQ** (für asynchrone Kommunikation)
+
+#### Lokale Ausführung
+
+**Order Service**:
+```bash
+cd order
+./gradlew bootRun
+```
+
+**Delivery Service**:
+```bash
+cd delivery
+./gradlew bootRun
+```
+
+**Kitchen Service**:
+```bash
+cd kitchen
+go run main.go
+```
+
+**Frontend**:
+```bash
+cd shop-frontend
+npm install
+ng serve
+```

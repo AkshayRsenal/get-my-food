@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: delivery
+  rabbitmq:
+    listener:
+      simple:
+        default-requeue-rejected: false
+server:
+  port: 8050
