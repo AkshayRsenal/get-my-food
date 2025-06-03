@@ -155,3 +155,44 @@ cd shop-frontend
 npm install
 ng serve
 ```
+
+---
+
+### API Dokumentation
+
+- **Order Service Swagger**: http://localhost:8060/swagger-ui.html
+- **Delivery Service Swagger**: http://localhost:8061/swagger-ui.html
+- **Order Service HTTP Client**: `order/order.http`
+- **Delivery Service HTTP Client**: `delivery/delivery.http`
+- **Kitchen Service HTTP Client**: `kitchen/kitchen.http`
+
+---
+
+### Konfiguration
+
+Jeder Service verwendet `application.yaml` für Konfiguration:
+
+- **Database**: Spring Data JPA mit relativer DB
+- **RabbitMQ**: Message Broker für Event-Streaming
+- **Server Port**: Individuell konfiguriert pro Service
+- **Logging**: SLF4J Logging
+
+---
+
+### Best Practices
+
+**Microservices Prinzipien**:
+- Jeder Service hat eine eigene Datenbank
+- Asynchrone Kommunikation über Message Broker
+- REST APIs für synchrone Aufrufe
+- Unabhängige Deployment und Skalierung
+
+**Docker Integration**:
+- `.dockerignore` optimiert Build-Kontext
+- Multi-stage Builds für kleinere Images
+- Environment-basierte Konfiguration
+
+**Monitoring & Debugging**:
+- REST HTTP Client Files für einfaches Testen
+- Swagger UI für API-Exploration
+- Structured Logging für Troubleshooting
