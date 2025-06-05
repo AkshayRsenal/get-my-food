@@ -25,5 +25,35 @@ func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
+	var config Config
+	err := envconfig.Process("kitchen", &config)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	r := chi.NewRouter()
+
+	r.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello Kitchen")
+	})
+
+	rabbitMqConn := fmt.Sprintf("amqp://guest:guest@%s:5672/", config.RabbitMQHost)
+	slog.Info("connecting to rabbit", "rabbitMqConn", rabbitMqConn)
+
+	retrier := retry.NewFibonacci(3 * time.Second)
+	retrier = retry.WithMaxDuration(60*time.Second, retrier)
+
+	var conn *amqp.Connection
+	var msgs <-chan amqp.Delivery
+	err = retry.Do(context.Background(), retrier, func(ctx context.Context) error {
+		conn, err = amqp.Dial(rabbitMqConn)
+		if err != nil {
+			return retry.RetryableError(err)
+		}
+		ch, err := conn.Channel()
+		if err != nil {
+			return retry.RetryableError(err)
+		}
+
 
 }
