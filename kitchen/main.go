@@ -45,15 +45,5 @@ func main() {
 
 	var conn *amqp.Connection
 	var msgs <-chan amqp.Delivery
-	err = retry.Do(context.Background(), retrier, func(ctx context.Context) error {
-		conn, err = amqp.Dial(rabbitMqConn)
-		if err != nil {
-			return retry.RetryableError(err)
-		}
-		ch, err := conn.Channel()
-		if err != nil {
-			return retry.RetryableError(err)
-		}
-
-
+	
 }
