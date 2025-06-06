@@ -45,5 +45,41 @@ func main() {
 
 	var conn *amqp.Connection
 	var msgs <-chan amqp.Delivery
-	
+	err = retry.Do(context.Background(), retrier, func(ctx context.Context) error {
+		conn, err = amqp.Dial(rabbitMqConn)
+		if err != nil {
+			return retry.RetryableError(err)
+		}
+		ch, err := conn.Channel()
+		if err != nil {
+			return retry.RetryableError(err)
+		}
+
+		slog.Info("Looking for queue kitchen.orders")
+
+		msgs, err = ch.Consume(
+			"kitchen.orders", // queue
+			"",               // consumer
+			true,             // auto-ack
+			false,            // exclusive
+			false,            // no-local
+			false,            // no-wait
+			nil,              // args
+		)
+
+		slog.Info("Not connected", err)
+
+		if err != nil {
+			return retry.RetryableError(err)
+		}
+
+		slog.Info("Succesfully connected to queue kitchen.orders")
+
+		return nil
+	})
+	if err != nil {
+		slog.Info("err connecting", "message", err)
+		log.Fatal(err)
+	}
+
 }
