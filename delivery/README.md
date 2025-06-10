@@ -82,3 +82,32 @@ Alternativ:
 ```bash
 java -jar build/libs/delivery-*.jar
 ```
+
+### Docker Build
+```bash
+docker build -t delivery-service .
+docker run -p 8061:8061 \
+  -e SPRING_RABBITMQ_HOST=rabbitmq \
+  -e SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/delivery \
+  delivery-service
+```
+
+## Konfiguration
+
+### application.yaml
+```yaml
+spring:
+  application:
+    name: delivery-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  datasource:
+    url: jdbc:mysql://localhost:3306/delivery
+    username: root
+    password: root    

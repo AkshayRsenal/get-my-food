@@ -1,0 +1,9 @@
+### Health Check
+GET http://localhost:8062/
+
+### Get All Orders
+GET http://localhost:8062/kitchen/orders
+
+### Get Order by ID
+GET http://localhost:8062/kitchen/orders/1
+
