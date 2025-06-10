@@ -16,3 +16,4 @@ EXPOSE 4200
 COPY Caddyfile /etc/caddy/Caddyfile
 RUN cat /etc/caddy/Caddyfile
 COPY --from=builder /app/dist/shop-frontend/* /usr/share/caddy
+
