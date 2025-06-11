@@ -110,4 +110,54 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/delivery
     username: root
-    password: root    
+    password: root
+    
+server:
+  port: 8061
+  servlet:
+    context-path: /
+```
+
+### Umgebungsvariablen
+```
+SPRING_RABBITMQ_HOST=localhost
+SPRING_RABBITMQ_PORT=5672
+SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/delivery
+SERVER_PORT=8061
+```
+
+## Open API / Swagger Documentation
+
+### Swagger UI
+http://localhost:8061/swagger-ui.html
+
+### Raw OpenAPI YAML
+http://localhost:8061/v3/api-docs.yaml
+
+### REST Client File
+Siehe `delivery.http` für HTTP-Requests zum manuellen Testen:
+```http
+GET http://localhost:8061/deliveries
+Authorization: Bearer token
+
+### Get Delivery by ID
+GET http://localhost:8061/deliveries/1
+
+### Create Delivery
+POST http://localhost:8061/deliveries
+Content-Type: application/json
+
+{
+  "orderId": 1,
+  "deliveryAddress": "Hauptstraße 123, 10115 Berlin",
+  "estimatedDeliveryTime": "2026-01-24T18:30:00"
+}
+
+### Update Delivery Status
+PUT http://localhost:8061/deliveries/1
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+```
