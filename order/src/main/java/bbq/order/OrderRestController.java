@@ -22,7 +22,7 @@ public class OrderRestController {
 
     private final OrderRepository orderRepository;
 
-    // private final KafkaTemplate<String, Order> kafkaTemplate;
+    private final KafkaTemplate<String, Order> kafkaTemplate;
 
 
     @PostMapping
