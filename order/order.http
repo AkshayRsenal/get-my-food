@@ -54,3 +54,30 @@ GET localhost:8060/api/menu/response-entity
 ### API Docs
 
 GET http://localhost:8060/v3/api-docs.yaml
+
+
+### Post order for Kafka
+
+POST localhost:8060/api/order
+Content-Type: application/json
+### Send Order
+
+{
+  "cart": {
+    "items": [
+      {
+        "itemId": "m01",
+        "itemTitle": "Pulled Pork Sandwich",
+        "count": 2,
+        "itemPrice": 9.99,
+        "total": 9.99
+      }
+    ]
+  },
+  "billingAddress": {
+    "name": "Jane Doe",
+    "street": "Main St 1",
+    "city": "BBQtown",
+    "zip": "12345"
+  }
+}

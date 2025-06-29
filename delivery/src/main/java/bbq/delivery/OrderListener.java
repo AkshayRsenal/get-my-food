@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderListener {
     private final DeliveryRepository deliveryRepository;
 
-    @RabbitListener(queues = "delivery.orders")
+    @KafkaListener(topics = "orders", groupId = "delivery", properties = {"spring.json.value.default.type=bbq.delivery.model.Order"})
     public void onOrder(Order order) {
         log.info("Received order: {}", order);
 
